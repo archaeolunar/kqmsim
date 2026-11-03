@@ -13,13 +13,16 @@ import (
 
 const (
 	PolestarFieldStacksKey = PolestarFieldKey + "-stacks"
-	sscRecordKey           = PolestarFieldKey + "-recorded"
-	sscFieldDur            = 6 * 60
-	sscStackICDKey         = PolestarFieldKey + "-icd"
-	sscStackICDDur         = 0.1 * 60
-	sscMaxStacks           = 12
-	sscThinkInterval       = 4 * 60
-	sscBuffDur             = sscThinkInterval + 1 // one frame higher so it isn't constantly expiring and then reapplying on the same frame
+	// PolestarFieldBonusStacksKey adds this many stacks to the buff every time the
+	// Polestar Field grants it.
+	PolestarFieldBonusStacksKey = PolestarFieldKey + "-bonus-stacks"
+	sscRecordKey                = PolestarFieldKey + "-recorded"
+	sscFieldDur                 = 6 * 60
+	sscStackICDKey              = PolestarFieldKey + "-icd"
+	sscStackICDDur              = 0.1 * 60
+	sscMaxStacks                = 12
+	sscThinkInterval            = 4 * 60
+	sscBuffDur                  = sscThinkInterval + 1 // one frame higher so it isn't constantly expiring and then reapplying on the same frame
 )
 
 var stellarConductBuff = []float64{
@@ -113,6 +116,10 @@ func (p *PolestarField) unsub() {
 func (p *PolestarField) refreshBuffs() {
 	oldStacks := int(p.Core.Flags.Custom[PolestarFieldStacksKey])
 	newStacks := int(p.Core.Flags.Custom[sscRecordKey])
+	// bonus stacks granted every time the field grants its buff (e.g. Anastasya A4)
+	if bonus := int(p.Core.Flags.Custom[PolestarFieldBonusStacksKey]); bonus > 0 {
+		newStacks = min(newStacks+bonus, sscMaxStacks)
+	}
 	p.Core.Flags.Custom[PolestarFieldStacksKey] = float64(newStacks)
 	p.Core.Flags.Custom[sscRecordKey] = 0
 	p.Core.Log.NewEvent("Updating polestar field buff stacks", glog.LogElementEvent, -1).Write("old_stacks", oldStacks).Write("new_stacks", newStacks)

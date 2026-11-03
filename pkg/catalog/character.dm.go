@@ -2136,6 +2136,160 @@ var CharacterMap = map[keys.Char]*model.AvatarData{
 			BurstEnergyCost: 70.0,
 		},
 	},
+	// PLACEHOLDER: Anastasya base stats/ids are unknown (leak shows ???). Values are
+	// copied from Ganyu (5* Cryo bow) until datamined data is available.
+	keys.Anastasya: {
+		Id:          10000138,
+		SubId:       13801,
+		Key:         "anastasya",
+		Rarity:      model.QualityType_QUALITY_ORANGE,
+		Body:        model.BodyType_BODY_LADY,
+		Region:      model.AssocType_ASSOC_TYPE_SNEZHNAYA,
+		Element:     model.ElementType_Ice,
+		WeaponClass: model.WeaponType_WEAPON_BOW,
+		IconName:    "UI_AvatarIcon_Anastasya",
+		Stats: &model.AvatarStatsData{
+			BaseHp:   762.65601,
+			BaseAtk:  26.068,
+			BaseDef:  49.0606,
+			HpCurve:  model.GrowCurveType_GROW_CURVE_HP_S5,
+			AtkCurve: model.GrowCurveType_GROW_CURVE_ATTACK_S5,
+			DefCruve: model.GrowCurveType_GROW_CURVE_HP_S5,
+			PromoData: []*model.PromotionData{
+				{
+					MaxLevel: 20,
+				},
+				{
+					MaxLevel: 40,
+					AddProps: []*model.PromotionAddProp{
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_HP,
+							Value:    653.9086,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_DEFENSE,
+							Value:    42.066,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_ATTACK,
+							Value:    22.34932,
+						},
+					},
+				},
+				{
+					MaxLevel: 50,
+					AddProps: []*model.PromotionAddProp{
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_HP,
+							Value:    1118.528,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_DEFENSE,
+							Value:    71.955,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_ATTACK,
+							Value:    38.2291,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_CRITICAL_HURT,
+							Value:    0.096,
+						},
+					},
+				},
+				{
+					MaxLevel: 60,
+					AddProps: []*model.PromotionAddProp{
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_HP,
+							Value:    1738.02,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_DEFENSE,
+							Value:    111.807,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_ATTACK,
+							Value:    59.40214,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_CRITICAL_HURT,
+							Value:    0.192,
+						},
+					},
+				},
+				{
+					MaxLevel: 70,
+					AddProps: []*model.PromotionAddProp{
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_HP,
+							Value:    2202.639,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_DEFENSE,
+							Value:    141.696,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_ATTACK,
+							Value:    75.28192,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_CRITICAL_HURT,
+							Value:    0.192,
+						},
+					},
+				},
+				{
+					MaxLevel: 80,
+					AddProps: []*model.PromotionAddProp{
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_HP,
+							Value:    2667.259,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_DEFENSE,
+							Value:    171.585,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_ATTACK,
+							Value:    91.1617,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_CRITICAL_HURT,
+							Value:    0.288,
+						},
+					},
+				},
+				{
+					MaxLevel: 90,
+					AddProps: []*model.PromotionAddProp{
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_HP,
+							Value:    3131.878,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_DEFENSE,
+							Value:    201.474,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_BASE_ATTACK,
+							Value:    107.0415,
+						},
+						{
+							PropType: model.FightPropType_FIGHT_PROP_CRITICAL_HURT,
+							Value:    0.384,
+						},
+					},
+				},
+			},
+		},
+		SkillDetails: &model.AvatarSkillsData{
+			Skill:           31802,
+			Burst:           31805,
+			Attack:          31801,
+			BurstEnergyCost: 50.0,
+		},
+	},
 	keys.Arlecchino: {
 		Id:          10000096,
 		SubId:       9601,

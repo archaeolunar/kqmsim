@@ -87,6 +87,11 @@ func (h *Handler) ReadyCheck(t action.Action, k keys.Char, param map[string]int)
 			h.Events.Emit(event.OnActionFailed, h.active, t, param, action.SwapCD)
 			return ErrActionNotReady
 		}
+		// characters under the Sealing status cannot be switched onto the field
+		if h.chars[h.charPos[k]].StatusIsActive(SealedStatusKey) {
+			h.Events.Emit(event.OnActionFailed, h.active, t, param, action.CharacterSealed)
+			return ErrActionNotReady
+		}
 	}
 
 	return nil

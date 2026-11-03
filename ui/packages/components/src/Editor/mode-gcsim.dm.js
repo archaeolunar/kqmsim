@@ -93,6 +93,8 @@ ace.define(
         'aloy',
         'alyosha',
         'amber',
+        'anastasya',
+        'anastasia',
         'aratakiitto',
         'aratakitheoneandoniitto',
         'itto',
