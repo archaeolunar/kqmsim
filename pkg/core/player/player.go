@@ -29,6 +29,10 @@ const (
 	SwapCDFrames = 60
 )
 
+// SealedStatusKey is a character status that prevents the character from being
+// switched onto the field while active (e.g. Anastasya's Sealing).
+const SealedStatusKey = "sealed"
+
 type Handler struct {
 	Opt
 	// handlers

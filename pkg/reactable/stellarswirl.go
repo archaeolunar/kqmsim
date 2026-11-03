@@ -21,6 +21,14 @@ const (
 	sswContributionKey      = SswKey + "-contribution"
 	sswOwnerKey             = SswKey + "-owner"
 	StellarSwirlBonusDurKey = SswKey + "-bonus-dur"
+	// StellarSwirlMultBonusKey increases the base reaction multiplier of Stellar
+	// Swirl by this ratio (0.15 = +15%).
+	StellarSwirlMultBonusKey = SswKey + "-mult-bonus"
+	// StellarVortexMinStacksKey upgrades a newly created Stellar Vortex to at least
+	// this many stacks, at most once per StellarVortexUpgradeICD frames.
+	StellarVortexMinStacksKey = SswKey + "-vortex-min-stacks"
+	stellarVortexUpgradeKey   = SswKey + "-vortex-upgrade-frame"
+	StellarVortexUpgradeICD   = 60
 )
 
 type sswContribution = struct {
@@ -92,6 +100,7 @@ func (r *Reactable) queueStellarSwirl(charIndex int) {
 	vortex := r.nearbySSwVortex()
 	if vortex == nil {
 		vortex = r.newStellarVortex()
+		r.tryUpgradeSSwVortex()
 	}
 
 	if r.sswStacks() >= sswMaxStacks {
@@ -108,7 +117,24 @@ func (r *Reactable) nearbySSwVortex() info.Gadget {
 	return nil
 }
 
+func (r *Reactable) tryUpgradeSSwVortex() {
+	minStacks := int(r.core.Flags.Custom[StellarVortexMinStacksKey])
+	if minStacks <= 0 {
+		return
+	}
+	if last, ok := r.core.Flags.Custom[stellarVortexUpgradeKey]; ok && r.core.F-int(last) < StellarVortexUpgradeICD {
+		return
+	}
+	if r.sswStacks() >= minStacks {
+		return
+	}
+	r.core.Flags.Custom[stellarVortexUpgradeKey] = float64(r.core.F)
+	r.core.Flags.Custom[sswStackKey] = float64(min(minStacks, sswMaxStacks))
+	r.core.Log.NewEvent("stellar vortex upgraded on creation", glog.LogElementEvent, -1).Write("stacks", r.sswStacks())
+}
+
 func (r *Reactable) calcStellarSwirlDmg(target info.Target, ai info.AttackInfo, ap info.AttackPattern, contribMap [info.MaxChars]bool, mult float64, owner int) (info.AttackInfo, info.Snapshot) {
+	mult *= 1 + r.core.Flags.Custom[StellarSwirlMultBonusKey]
 	contributions := []sswContribution{}
 	for charInd, char := range r.core.Player.Chars() {
 		if !contribMap[charInd] {
